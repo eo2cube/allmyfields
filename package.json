@@ -10,6 +10,7 @@
     "vite": "^5.2.11"
   },
   "dependencies": {
-    "ol": "latest"
+    "ol": "latest",
+    "ol-ext": "^4.0.18"
   }
 }
