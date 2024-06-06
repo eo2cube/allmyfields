@@ -4,10 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using OpenLayers with Vite</title>
+    <title>All My Fields</title>
   </head>
   <body>
+    <h1>All My Fields</h1>
+    <div id="droptarget" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+      Drag GeoJSON file here
+    </div>
     <div id="map"></div>
+    <footer>Part of the AgriSens DEMMIN 4.0 research project funded by the German Ministry for Agriculture</footer>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
