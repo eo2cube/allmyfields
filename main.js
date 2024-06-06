@@ -14,25 +14,14 @@ const osm = new TileLayer({
   source: new OSM()
 });
 
-const wms = new TileLayer({
-  source: new TileWMS({
-    url: 'https://ows.eo2cube.org/wms',
-    params: {
-      'LAYERS': 's2_vi_evi_diff_winter_wheat',
-      'TIME': '2021-06-17T00:00:00Z' // 2022-06-17 (rapeseed), 2023-06-22 (unknown)
-    }
-  })
-});
-
 const map = new Map({
   target: 'map',
   layers: [
     osm,
-    wms,
   ],
   view: new View({
     center: fromLonLat([13.23441, 53.82732]),
-    zoom: 15
+    zoom: 7
   })
 });
 
@@ -46,14 +35,32 @@ window.dropHandler = function (event) {
 }
 
 function handleGeoJson(fileContent) {
+  const features = new GeoJSON().readFeatures(fileContent);
+  const properties = features[0].getProperties();
+  
   const geojson = new VectorLayer({
     source: new VectorSource({
-      features: new GeoJSON().readFeatures(fileContent),
+      features: features,
     }),
   });
-  const crop = new Crop({
-    feature: geojson.getSource().getFeatures()[0],
+  
+  const wms = new TileLayer({
+    source: new TileWMS({
+      url: 'https://ows.eo2cube.org/wms',
+      params: {
+        'LAYERS': 's2_vi_evi_diff_' + properties.croptype,
+        'TIME': properties.year + '-06-17T00:00:00Z',
+      }
+    })
   });
-  map.addLayer(geojson);
+
+  const crop = new Crop({
+    feature: features[0],
+  });
+
   wms.addFilter(crop);
+  map.addLayer(wms);
+  map.addLayer(geojson);
+
+  map.getView().fit(geojson.getSource().getExtent(), {padding:[50,50,50,50]});
 }
