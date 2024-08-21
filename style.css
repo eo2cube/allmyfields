@@ -20,6 +20,16 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+#controls {
+  width: 90vw;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+}
+#controls input[type="range"] {
+  flex-grow: 1;
+  margin: 0 20px;
+}
 #map {
   width: 100%;
   flex-grow: 1;

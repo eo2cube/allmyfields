@@ -11,6 +11,11 @@
     <div id="droptarget" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
       Drag GeoJSON file here
     </div>
+    <div id="controls">
+      Select date:
+      <input id="dateslider" type="range" min="1" max="365" value="168" onchange="changeSliderHandler(event)">
+      <input id="datepicker" type="date" onchange="changeDateHandler(event)">
+    </div>
     <div id="map"></div>
     <footer>Part of the AgriSens DEMMIN 4.0 research project funded by the German Ministry for Agriculture</footer>
     <script type="module" src="./main.js"></script>
